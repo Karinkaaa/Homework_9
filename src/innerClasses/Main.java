@@ -1,4 +1,4 @@
-package innerClasses.firstTask;
+package innerClasses;
 
 import java.util.Iterator;
 
