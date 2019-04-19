@@ -1,5 +1,6 @@
 package innerClasses;
 
+import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
 public class DataStructure {
@@ -23,7 +24,12 @@ public class DataStructure {
 
     private class EvenIterator implements DataStructureIterator {
 
+        private int[] arrayOfIntsCopy;
         private int currentIndex = 0;
+
+        public EvenIterator() {
+            this.arrayOfIntsCopy = arrayOfInts;
+         }
 
         @Override
         public boolean hasNext() {
@@ -33,11 +39,17 @@ public class DataStructure {
         @Override
         public Integer next() {
 
+            if (arrayOfIntsCopy != arrayOfInts) {
+                throw new ConcurrentModificationException("Массив был изменён за пределами итератора!");
+            }
+
             if (currentIndex < SIZE) {
                 return arrayOfInts[currentIndex++];
             } else {
                 throw new NoSuchElementException("No such element!");
             }
         }
+
+
     }
 }
